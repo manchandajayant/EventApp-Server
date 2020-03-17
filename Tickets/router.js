@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const Ticket = require("./model");
 const router = new Router();
+const User = require("../Users/model");
 
 router.post(
   "/ticket", // path
@@ -26,7 +27,7 @@ router.post(
 
 router.get("/ticket", (req, res, next) => {
   //console.log("this is a get call to find all tickets", res.body);
-  Ticket.findAll({ attriibutes: ["name"], raw: true })
+  Ticket.findAll({ attriibutes: ["id"], raw: true })
     .then(ticket => {
       res.json(ticket);
     })
@@ -35,7 +36,7 @@ router.get("/ticket", (req, res, next) => {
 
 router.get("/ticket/:id", (req, res, next) => {
   //console.log("this is to fetch ticket by id");
-  Ticket.findByPk(req.params.id)
+  Ticket.findByPk(req.params.id, { include: [User] })
     .then(ticket => {
       res.json(ticket);
     })

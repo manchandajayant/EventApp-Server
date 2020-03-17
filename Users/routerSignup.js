@@ -23,4 +23,13 @@ router.get("/user", (req, res, next) => {
     .catch(next);
 });
 
+router.get("/user/:id", (req, res, next) => {
+  //console.log("this is to fetch event by id");
+  User.findByPk(req.params.id)
+    .then(user => {
+      res.json(user);
+    })
+    .catch(next);
+});
+
 module.exports = router;

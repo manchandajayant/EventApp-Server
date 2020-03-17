@@ -12,40 +12,24 @@ router.post("/event", (req, res, next) => {
 
 router.get("/event", (req, res, next) => {
   //console.log("this is a get call to find all events", res.body);
-  Event.findAll({ attriibutes: ["name"], raw: true })
+  Event.findAll({
+    attributes: ["name", "id", "description", "url"],
+    raw: true
+  })
     .then(event => {
       res.json(event);
     })
     .catch(next);
 });
 
-router.get(
-  "/evennt/:id", // path with an id parameter
-  async (request, response, next) => {
-    // handler callback
-    try {
-      // pick what parameters you want
-      const { id } = request.params;
-
-      const query = {
-        include: [
-          // include takes an array
-          Ticket // Family.hasMany(Species)
-        ]
-      };
-
-      // read single family by id using a promise
-      const event = await Event.findByPk(
-        id, // the id of the target record
-        query // unlike findAll, findByPk takes two arguments.
-      );
-
-      response.send(event);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
+router.get("/event/:id", (req, res, next) => {
+  //console.log("this is to fetch event by id");
+  Event.findByPk(req.params.id, { include: [Ticket] })
+    .then(event => {
+      res.json(event);
+    })
+    .catch(next);
+});
 
 router.put("/event/:id", (req, res, next) => {
   Event.findByPk(req.params.id)
