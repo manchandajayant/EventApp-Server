@@ -36,7 +36,14 @@ router.get("/ticket", (req, res, next) => {
 
 router.get("/ticket/:id", (req, res, next) => {
   //console.log("this is to fetch ticket by id");
-  Ticket.findByPk(req.params.id, { include: [User] })
+  Ticket.findByPk(req.params.id, {
+    include: [
+      {
+        model: User,
+        include: [Ticket]
+      }
+    ]
+  })
     .then(ticket => {
       res.json(ticket);
     })
