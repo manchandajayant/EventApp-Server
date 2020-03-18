@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const User = require("./model");
 const bcrypt = require("bcrypt");
+const Ticket = require("../Tickets/model");
 
 const router = new Router();
 
@@ -25,7 +26,7 @@ router.get("/user", (req, res, next) => {
 
 router.get("/user/:id", (req, res, next) => {
   //console.log("this is to fetch event by id");
-  User.findByPk(req.params.id)
+  User.findByPk(req.params.id, { include: [Ticket] })
     .then(user => {
       res.json(user);
     })

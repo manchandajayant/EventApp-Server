@@ -14,5 +14,6 @@ Ticket.belongsTo(Event);
 Ticket.belongsTo(User);
 
 Event.hasMany(Ticket);
+User.hasMany(Ticket);
 
 module.exports = Ticket;
