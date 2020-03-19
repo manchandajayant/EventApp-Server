@@ -34,4 +34,13 @@ router.get("/comment/:ticketId", (req, res, next) => {
     .catch(next);
 });
 
+router.get("/comment", (req, res, next) => {
+  //console.log("this is a get call to find all tickets", res.body);
+  Comment.findAll({ attriibutes: ["id"], raw: true })
+    .then(comment => {
+      res.json(comment);
+    })
+    .catch(next);
+});
+
 module.exports = router;
