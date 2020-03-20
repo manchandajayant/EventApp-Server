@@ -3,8 +3,9 @@ const Ticket = require("./model");
 const router = new Router();
 const User = require("../Users/model");
 const Comment = require("../Comments/model");
+const auth = require("../Authorisation/middleware");
 
-router.post("/ticket", async (request, response, next) => {
+router.post("/ticket", auth, async (request, response, next) => {
   try {
     const { price, description, eventId, url, userId } = request.body;
 
