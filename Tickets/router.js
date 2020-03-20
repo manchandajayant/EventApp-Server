@@ -48,4 +48,11 @@ router.get("/ticket/:id", (req, res, next) => {
     .catch(next);
 });
 
+router.put("/ticket/:id", (req, res, next) => {
+  Ticket.findByPk(req.params.id)
+    .then(ticket => ticket.update(req.body))
+    .then(ticket => res.send(ticket))
+    .catch(next);
+});
+
 module.exports = router;
