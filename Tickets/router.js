@@ -20,7 +20,11 @@ router.post("/ticket", async (request, response, next) => {
 
 router.get("/ticket", (req, res, next) => {
   //console.log("this is a get call to find all tickets", res.body);
-  Ticket.findAll({ attriibutes: ["id"], raw: true })
+  Ticket.findAll({
+    attributes: ["id", "userId", "eventId", "price", "description"],
+    include: User,
+    raw: true
+  })
     .then(ticket => {
       res.json(ticket);
     })
